@@ -9,7 +9,7 @@ public class NPCTurretController : EnemyFSM
     protected override void Initialize()
     {
         elapsedTime = 0.0f;
-        shootRate = 2.0f;
+        shootRate = 5.0f;
 
         GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
         playerTransform = objPlayer.transform;
@@ -52,7 +52,7 @@ public class NPCTurretController : EnemyFSM
     {
         if (elapsedTime >= shootRate)
         {
-            Instantiate(Bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+            Instantiate(Bullet, transform.position, transform.rotation);
             elapsedTime = 0.0f;
         }
     }

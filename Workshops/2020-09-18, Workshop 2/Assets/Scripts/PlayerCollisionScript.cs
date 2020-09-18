@@ -38,6 +38,8 @@ public class PlayerCollisionScript : MonoBehaviour
         {
             hasSeed = false;
             transform.position = spawnPosition;
+            seed.transform.position = new Vector3(seed.transform.position.x, 0.5f, seed.transform.position.z);
+            Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Seed"))
         {
