@@ -6,7 +6,7 @@ public class GrowScript : MonoBehaviour
 {
 
     private bool growing = false;
-    private float maxGrowSize = 2.5f;
+    private float maxGrowSize = 25f;
 
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class GrowScript : MonoBehaviour
     {
         if (growing && transform.localScale.x < maxGrowSize)
         {
-            transform.localScale *= 1.001f;
+            transform.localScale *= 1.1f;
         }
     }
 
