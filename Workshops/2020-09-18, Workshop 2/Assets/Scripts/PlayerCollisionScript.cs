@@ -9,7 +9,7 @@ public class PlayerCollisionScript : MonoBehaviour
 
     Vector3 spawnPosition;
 
-    public GameObject seed;
+    private GameObject seed;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class PlayerCollisionScript : MonoBehaviour
 
     }
 
-    void onTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         Debug.Log("Test");
         if (other.gameObject.CompareTag("Bullet"))
@@ -41,6 +41,7 @@ public class PlayerCollisionScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Seed"))
         {
+            seed = other.gameObject;
             hasSeed = true;
             Debug.Log("PickUp");
 
@@ -48,7 +49,8 @@ public class PlayerCollisionScript : MonoBehaviour
         else if (other.gameObject.CompareTag("Planter") && hasSeed)
         {
             hasSeed = false;
-            //other.gameObject.GetComponent<GrowScript>().grow();
+            other.gameObject.GetComponent<GrowScript>().Grow();
+            Destroy(seed);
         }
     }
 }
