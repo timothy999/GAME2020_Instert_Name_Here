@@ -69,7 +69,7 @@ public class PlayerHydrationScript : MonoBehaviour
         {
             liquid = maxLiquid;
             timeCount = 0;
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("Key1"))
         {
