@@ -24,6 +24,8 @@ public class PlayerMovementScript : MonoBehaviour
 
     float vSpeed = 0;
 
+    bool won = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,9 +58,13 @@ public class PlayerMovementScript : MonoBehaviour
         }
 
         vSpeed -= gravity * Time.deltaTime;
+        if (won)
+        {
+            vSpeed = 3;
+        }
         move.y = vSpeed;
 
-
+        
         controller.Move(move * speed * Time.deltaTime);
 
         //lock mouse
@@ -87,5 +93,16 @@ public class PlayerMovementScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cursorVisible = false;
+    }
+
+    public void respawn() {
+        controller.enabled = false;
+        transform.position = spawn;
+        controller.enabled = true;
+        Debug.Log("respawned");
+    }
+
+    public void setWin() {
+        won = true;
     }
 }

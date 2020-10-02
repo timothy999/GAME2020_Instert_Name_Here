@@ -8,6 +8,13 @@ TagManager:
   - Bullet
   - Planter
   - Ground
+  - Water
+  - Key1
+  - Key2
+  - Key3
+  - Pillar1
+  - Pillar2
+  - Pillar3
   layers:
   - Default
   - TransparentFX
