@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd00c9bf18c87b45a68b51e3975f739, type: 3}
   m_Name: LeverData
   m_EditorClassIdentifier: 
-  totalAmountOfLevers: 0
-  numberOfLeversOn: 0
+  totalAmountOfLevers: 4
+  numberOfLeversOn: 4

@@ -26,17 +26,26 @@ public class LevelManager : MonoBehaviour
 
     public GameObject UI_Object;
 
+    public LeverManager leverManager;
+
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         spawn = GameObject.FindGameObjectsWithTag("Spawn");
+        leverManager.totalAmountOfLevers = 4;
+        leverManager.numberOfLeversOn = 4;
         Debug.Log(spawn.Length);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(leverManager.numberOfLeversOn < lights)
+        {
+            removeLight();
+        }
+
         timer += Time.deltaTime;
         if (isBreak)
         {
@@ -117,7 +126,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void removeLigth() {
+    public void removeLight() {
         lights--;
     }
 

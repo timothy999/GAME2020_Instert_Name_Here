@@ -20,8 +20,8 @@ public class LeverController : MonoBehaviour
     void TriggerLever()
     {
         hasBeenTriggered = true;
-        leverData.numberOfLeversOn++;
-        modelMaterial.EnableKeyword("_EMISSION");
+        leverData.numberOfLeversOn--;
+        modelMaterial.DisableKeyword("_EMISSION");
         modelTransform.Rotate(new Vector3(180f, 0f, 0f));
         Debug.Log("Lever triggered");
     }
