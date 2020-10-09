@@ -5,9 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-
-    public Transform targetPlayerTransform;
-  
+    private GameObject Player;
 
     public float movementSpeed;
     public float damage;
@@ -17,16 +15,18 @@ public class EnemyController : MonoBehaviour
     public float wanderRadius;
     public float idleTime;
 
-    private Transform enemyTransform;
     private NavMeshAgent agent;
     private enum state { idle, wander, attack};
     private state currentState = state.idle;
     private float previousAttackTime;
     private float startIdleTime;
+    private Transform enemyTransform;
    
     // Start is called before the first frame update
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(Player);
         enemyTransform = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         idleStateEnter();
@@ -92,13 +92,13 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            agent.SetDestination(targetPlayerTransform.position);
+            agent.SetDestination(Player.transform.position);
         }
     }
 
     float distanceToPlayer()
     {
-        return Vector3.Distance(targetPlayerTransform.position, enemyTransform.position);
+        return Vector3.Distance(Player.transform.position, enemyTransform.position);
     }
 
     void dealPlayerDamage()
