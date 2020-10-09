@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 
     //In Seconds
     public int classesLenght = 300;
-    public int breakLength = 60;
+    public int breakLength = 30;
 
     public GameObject zombie;
 
@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour
 
     GameObject[] spawnedZombies;
 
+    public GameObject UI_Object;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,7 @@ public class LevelManager : MonoBehaviour
         {
             if (timer >= breakLength)
             {
+                Debug.Log("BREAK!");
                 isBreak = false;
                 startClasses();
                 timer = 0;
@@ -46,6 +49,7 @@ public class LevelManager : MonoBehaviour
         else {
             if (timer >= classesLenght)
             {
+                Debug.Log("CLASSES!");
                 isBreak = true;
                 startBreak();
                 timer = 0;
@@ -76,7 +80,9 @@ public class LevelManager : MonoBehaviour
             for (int i = 0; i < locDifficulty; i++)
             {
                 Vector3 loc = spawnLocation;
-                loc.x += difficulty;
+                loc.x += locDifficulty;
+                loc.y += locDifficulty;
+                Debug.Log(loc.y);
                 Instantiate(zombie, loc, new Quaternion(0, 0, 0, 0));
             }
         }
