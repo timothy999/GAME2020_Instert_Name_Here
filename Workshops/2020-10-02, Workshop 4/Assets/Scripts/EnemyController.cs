@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (distanceToPlayer() < minimumFollowingRage && previousAttackTime + attackCooldown < Time.time)
+        if (distanceToPlayer() < maximumFollowingRange && previousAttackTime + attackCooldown < Time.time)
         {
             currentState = state.attack;
         }
@@ -57,6 +57,8 @@ public class EnemyController : MonoBehaviour
 
     void idleStateUpdate()
     {
+        Debug.Log($"[{transform.name}] In Idle State");
+
         agent.destination = enemyTransform.position;
 
         if(startIdleTime + idleTime < Time.time)
@@ -76,8 +78,11 @@ public class EnemyController : MonoBehaviour
         NavMesh.SamplePosition(randomDirection, out navMeshHit, wanderRadius, 1);
         agent.destination = navMeshHit.position;
     }
+
     void wanderStateUpdate()
     {
+        Debug.Log($"[{transform.name}] In Wander State");
+
         if (Vector3.Distance(agent.destination, transform.position) < 3f)
         {
             idleStateEnter();
@@ -86,6 +91,8 @@ public class EnemyController : MonoBehaviour
 
     void attackStateUpdate()
     {
+        Debug.Log($"[{transform.name}] In Attack State");
+
         if (distanceToPlayer() > maximumFollowingRange)
         {
             idleStateEnter();
