@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public int classesLenght = 300;
     public int breakLength = 30;
 
-    public GameObject zombie;
+    public GameObject zombiePrefab;
 
     GameObject Player;
 
@@ -22,7 +23,7 @@ public class LevelManager : MonoBehaviour
 
     int difficulty = 1;
 
-    GameObject[] spawnedZombies;
+    List<GameObject> spawnedZombies = new List<GameObject>();
 
     public GameObject UI_Object;
 
@@ -51,10 +52,11 @@ public class LevelManager : MonoBehaviour
         {
             if (timer >= breakLength)
             {
+
                 Debug.Log("BREAK!");
                 timer = 0;
                 isBreak = false;
-                startClasses();
+                startBreak();
             }
         }
         else {
@@ -63,51 +65,31 @@ public class LevelManager : MonoBehaviour
                 Debug.Log("CLASSES!");
                 timer = 0;
                 isBreak = true;
-                startBreak();
+                startClasses();
                 
             }
         }
     }
 
-    void startBreak() {
-        //Spawn zombies nearby
-        //Based on ammount of lights
+    void startBreak()
+    {
 
-        //get closest 4
-        Vector3[] closeSpawn = new Vector3[4];
-        float[] spawnDistance = new float[closeSpawn.Length];
-        /*
-        for every spawn location
-            if higher than highest
-                    set new location
-            else if higher then secon
-                set new second higher
-            else if
-            */
-
-                for (int i = 0; i < spawn.Length; i++) {
-            float dist = Vector3.Distance(Player.transform.position, spawn[i].transform.position);
-                for (int j = 0; j < closeSpawn.Length; j++) {
-                if (dist < Vector3.Distance(Player.transform.position, spawn[j].transform.position)) {
-                    Debug.Log("Value = " + j);
-                    spawnDistance[j] = dist;
-                    closeSpawn[i] = spawn[i].transform.position;
-                    Debug.Log("Set Position");
-                    break;
-                    }
-                }
+        List<Vector3> closeSpawn = new List<Vector3>();
+        foreach (GameObject spawnLocal in spawn)
+        {
+            closeSpawn.Add(spawnLocal.transform.position);
         }
 
         int locDifficulty = difficulty + (4 - lights);
-        foreach (Vector3 spawnLocation in closeSpawn) {
+        Debug.Log("Amount of zombies is : " + closeSpawn.Count);
+        foreach (Vector3 spawnLocation in closeSpawn)
+        {
             for (int i = 0; i < locDifficulty; i++)
             {
-                
                 Vector3 loc = spawnLocation;
                 loc.x += i * 3;
                 loc.z += i * 3;
-                Debug.Log(loc.y);
-                spawnedZombies[i] = Instantiate(zombie, loc, new Quaternion(0, 0, 0, 0)) as GameObject;
+                spawnedZombies.Add(Instantiate(zombiePrefab, loc, new Quaternion(0, 0, 0, 0)));
             }
         }
     }
@@ -116,14 +98,12 @@ public class LevelManager : MonoBehaviour
         difficulty++;
 
         //remove all spawned zombies
-        if (spawnedZombies.Length != 0 && spawnedZombies != null)
-        {
+            Debug.Log("Removing zombies");
             foreach (GameObject zombie in spawnedZombies)
             {
                 zombie.GetComponent<EnemyController>().MoveToSpawn(getSpawnLocations());
             }
-            Invoke("removeAllZombies", 15.0f);
-        }
+            Invoke("removeAllZombies", 1.0f);
     }
 
     public void removeLight() {
@@ -139,10 +119,14 @@ public class LevelManager : MonoBehaviour
     }
 
     void removeAllZombies() {
-        foreach (GameObject zombie in spawnedZombies)
-        {
+        Debug.Log("Removed Zombies");
+        Debug.Log(spawnedZombies.Count);
+        foreach (GameObject zombie in spawnedZombies) {
             Destroy(zombie);
         }
+        spawnedZombies.Clear();
+        spawnedZombies = new List<GameObject>();
+        Debug.Log(spawnedZombies.Count);
     }
 
 }
