@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
 
     public float movementSpeed;
     public float damage;
-    public float minimumFollowingRage;
+    public float minimumFollowingRange;
     public float maximumFollowingRange;
     public float attackCooldown;
     public float wanderRadius;
