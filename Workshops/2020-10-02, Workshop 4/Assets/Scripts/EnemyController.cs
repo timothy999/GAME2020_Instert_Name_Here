@@ -77,4 +77,8 @@ public class EnemyController : MonoBehaviour
             currentState = state.idle;
         }
     }
+
+    public void MoveToSpawn(Vector3[] locations) {
+        //hello
+    }
 }
