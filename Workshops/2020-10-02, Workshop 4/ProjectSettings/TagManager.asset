@@ -15,6 +15,7 @@ TagManager:
   - Pillar1
   - Pillar2
   - Pillar3
+  - Spawn
   layers:
   - Default
   - TransparentFX
