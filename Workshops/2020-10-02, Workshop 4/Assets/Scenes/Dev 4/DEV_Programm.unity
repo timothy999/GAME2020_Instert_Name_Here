@@ -1312,7 +1312,7 @@ MonoBehaviour:
   breakLength: 10
   zombiePrefab: {fileID: 1726922826711417963, guid: c545cd2f7f9846e4da2debf14f007150, type: 3}
   UI_Object: {fileID: 336516536}
-  leverManager: {fileID: 0}
+  leverManager: {fileID: 11400000, guid: 26a68ad89fe1a514389cfc62ed6dde7e, type: 2}
 --- !u!4 &450013980
 Transform:
   m_ObjectHideFlags: 0
