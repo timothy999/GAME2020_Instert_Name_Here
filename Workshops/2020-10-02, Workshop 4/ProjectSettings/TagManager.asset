@@ -16,6 +16,7 @@ TagManager:
   - Pillar2
   - Pillar3
   - Spawn
+  - Lever
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - 
   - 
   - CloudsToy
-  - 
+  - Trigger
   - 
   - 
   - 
