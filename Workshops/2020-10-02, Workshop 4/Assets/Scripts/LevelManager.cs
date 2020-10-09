@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     GameObject Player;
 
-    public GameObject[] spawn = new GameObject[10];
+    GameObject[] spawn;
 
     float timer = 0;
     bool isBreak = false;
@@ -30,6 +30,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        spawn = GameObject.FindGameObjectsWithTag("Spawn");
+        Debug.Log(spawn.Length);
     }
 
     // Update is called once per frame
@@ -41,18 +43,19 @@ public class LevelManager : MonoBehaviour
             if (timer >= breakLength)
             {
                 Debug.Log("BREAK!");
+                timer = 0;
                 isBreak = false;
                 startClasses();
-                timer = 0;
             }
         }
         else {
             if (timer >= classesLenght)
             {
                 Debug.Log("CLASSES!");
+                timer = 0;
                 isBreak = true;
                 startBreak();
-                timer = 0;
+                
             }
         }
     }
@@ -64,26 +67,38 @@ public class LevelManager : MonoBehaviour
         //get closest 4
         Vector3[] closeSpawn = new Vector3[4];
         float[] spawnDistance = new float[closeSpawn.Length];
-        for (int i = 0; i < spawn.Length; i++) {
+        /*
+        for every spawn location
+            if higher than highest
+                    set new location
+            else if higher then secon
+                set new second higher
+            else if
+            */
+
+                for (int i = 0; i < spawn.Length; i++) {
             float dist = Vector3.Distance(Player.transform.position, spawn[i].transform.position);
                 for (int j = 0; j < closeSpawn.Length; j++) {
-                if (dist > spawnDistance[j]) {
+                if (dist < Vector3.Distance(Player.transform.position, spawn[j].transform.position)) {
+                    Debug.Log("Value = " + j);
                     spawnDistance[j] = dist;
+                    closeSpawn[i] = spawn[i].transform.position;
+                    Debug.Log("Set Position");
                     break;
                     }
                 }
         }
 
         int locDifficulty = difficulty + (4 - lights);
-
         foreach (Vector3 spawnLocation in closeSpawn) {
             for (int i = 0; i < locDifficulty; i++)
             {
+                
                 Vector3 loc = spawnLocation;
-                loc.x += locDifficulty;
-                loc.y += locDifficulty;
+                loc.x += i * 3;
+                loc.z += i * 3;
                 Debug.Log(loc.y);
-                Instantiate(zombie, loc, new Quaternion(0, 0, 0, 0));
+                spawnedZombies[i] = Instantiate(zombie, loc, new Quaternion(0, 0, 0, 0)) as GameObject;
             }
         }
     }
@@ -92,10 +107,14 @@ public class LevelManager : MonoBehaviour
         difficulty++;
 
         //remove all spawned zombies
-        foreach (GameObject zombie in spawnedZombies) {
-            zombie.GetComponent<EnemyController>().MoveToSpawn(getSpawnLocations());
+        if (spawnedZombies.Length != 0 && spawnedZombies != null)
+        {
+            foreach (GameObject zombie in spawnedZombies)
+            {
+                zombie.GetComponent<EnemyController>().MoveToSpawn(getSpawnLocations());
+            }
+            Invoke("removeAllZombies", 15.0f);
         }
-        Invoke("removeAllZombies", 15.0f);
     }
 
     public void removeLigth() {
